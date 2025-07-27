@@ -1,0 +1,192 @@
+Disassembly of f1:
+ 14           0 BUILD_LIST               0
+              2 STORE_FAST               1 (l)
+
+ 15           4 LOAD_FAST                0 (s)
+              6 GET_ITER
+        >>    8 FOR_ITER                 9 (to 28)
+             10 STORE_FAST               2 (x)
+
+ 16          12 LOAD_FAST                1 (l)
+             14 LOAD_METHOD              0 (append)
+             16 LOAD_GLOBAL              1 (ord)
+             18 LOAD_FAST                2 (x)
+             20 CALL_FUNCTION            1
+             22 CALL_METHOD              1
+             24 POP_TOP
+             26 JUMP_ABSOLUTE            4 (to 8)
+
+ 17     >>   28 LOAD_FAST                1 (l)
+             30 RETURN_VALUE
+
+Disassembly of f2:
+  7           0 LOAD_GLOBAL              0 (range)
+              2 LOAD_GLOBAL              1 (len)
+              4 LOAD_FAST                0 (l)
+              6 CALL_FUNCTION            1
+              8 CALL_FUNCTION            1
+             10 GET_ITER
+        >>   12 FOR_ITER                20 (to 54)
+             14 STORE_FAST               1 (i)
+
+  8          16 LOAD_FAST                1 (i)
+             18 STORE_FAST               2 (j)
+
+  9          20 LOAD_CONST               1 (3)
+             22 LOAD_CONST               2 (2)
+             24 LOAD_FAST                1 (i)
+             26 BINARY_MULTIPLY
+             28 BINARY_ADD
+             30 STORE_FAST               1 (i)
+
+ 10          32 LOAD_FAST                0 (l)
+             34 LOAD_FAST                2 (j)
+             36 DUP_TOP_TWO
+             38 BINARY_SUBSCR
+             40 LOAD_FAST                1 (i)
+             42 LOAD_CONST               3 (32)
+             44 BINARY_ADD
+             46 INPLACE_XOR
+             48 ROT_THREE
+             50 STORE_SUBSCR
+             52 JUMP_ABSOLUTE            6 (to 12)
+
+ 11     >>   54 LOAD_GLOBAL              2 (bytes)
+             56 LOAD_FAST                0 (l)
+             58 CALL_FUNCTION            1
+             60 RETURN_VALUE
+
+Disassembly of f3:
+  2           0 LOAD_CONST               1 (0)
+              2 LOAD_CONST               2 (('AES',))
+              4 IMPORT_NAME              0 (Crypto.Cipher)
+              6 IMPORT_FROM              1 (AES)
+              8 STORE_FAST               1 (AES)
+             10 POP_TOP
+
+  3          12 LOAD_FAST                1 (AES)
+             14 LOAD_METHOD              2 (new)
+             16 LOAD_GLOBAL              3 (k)
+             18 LOAD_FAST                1 (AES)
+             20 LOAD_ATTR                4 (MODE_ECB)
+             22 CALL_METHOD              2
+             24 STORE_FAST               2 (c)
+
+  4          26 LOAD_FAST                2 (c)
+             28 LOAD_METHOD              5 (decrypt)
+             30 LOAD_FAST                0 (b)
+             32 CALL_METHOD              1
+             34 LOAD_METHOD              6 (hex)
+             36 CALL_METHOD              0
+             38 RETURN_VALUE
+
+Disassembly of main:
+ 21           0 LOAD_CONST               1 (b'pls_input_flag: ')
+              2 STORE_GLOBAL             0 (k)
+
+ 22           4 LOAD_GLOBAL              1 (input)
+              6 LOAD_GLOBAL              2 (str)
+              8 LOAD_GLOBAL              0 (k)
+             10 LOAD_METHOD              3 (decode)
+             12 LOAD_CONST               2 ('utf-8')
+             14 CALL_METHOD              1
+             16 CALL_FUNCTION            1
+             18 CALL_FUNCTION            1
+             20 STORE_FAST               0 (flag0)
+
+ 23          22 LOAD_GLOBAL              4 (len)
+             24 LOAD_FAST                0 (flag0)
+             26 CALL_FUNCTION            1
+             28 LOAD_CONST               3 (38)
+             30 COMPARE_OP               3 (!=)
+             32 POP_JUMP_IF_FALSE       25 (to 50)
+
+ 24          34 LOAD_GLOBAL              5 (print)
+             36 LOAD_CONST               4 ('[ERROR] flag length error!')
+             38 CALL_FUNCTION            1
+             40 POP_TOP
+
+ 25          42 LOAD_GLOBAL              6 (exit)
+             44 LOAD_CONST               5 (1)
+             46 CALL_FUNCTION            1
+             48 POP_TOP
+
+ 26     >>   50 LOAD_FAST                0 (flag0)
+             52 LOAD_CONST               0 (None)
+             54 LOAD_CONST               6 (5)
+             56 BUILD_SLICE              2
+             58 BINARY_SUBSCR
+             60 LOAD_CONST               7 ('flag{')
+             62 COMPARE_OP               3 (!=)
+             64 POP_JUMP_IF_FALSE       41 (to 82)
+
+ 27          66 LOAD_GLOBAL              5 (print)
+             68 LOAD_CONST               8 ('[ERROR] check start')
+             70 CALL_FUNCTION            1
+             72 POP_TOP
+
+ 28          74 LOAD_GLOBAL              6 (exit)
+             76 LOAD_CONST               5 (1)
+             78 CALL_FUNCTION            1
+             80 POP_TOP
+
+ 29     >>   82 LOAD_FAST                0 (flag0)
+             84 LOAD_CONST               9 (-1)
+             86 BINARY_SUBSCR
+             88 LOAD_CONST              10 ('}')
+             90 COMPARE_OP               3 (!=)
+             92 POP_JUMP_IF_FALSE       55 (to 110)
+
+ 30          94 LOAD_GLOBAL              5 (print)
+             96 LOAD_CONST              11 ('[ERROR] check end')
+             98 CALL_FUNCTION            1
+            100 POP_TOP
+
+ 31         102 LOAD_GLOBAL              6 (exit)
+            104 LOAD_CONST               5 (1)
+            106 CALL_FUNCTION            1
+            108 POP_TOP
+
+ 32     >>  110 LOAD_FAST                0 (flag0)
+            112 LOAD_CONST               6 (5)
+            114 LOAD_CONST               9 (-1)
+            116 BUILD_SLICE              2
+            118 BINARY_SUBSCR
+            120 STORE_FAST               0 (flag0)
+
+ 33         122 LOAD_GLOBAL              7 (f1)
+            124 LOAD_FAST                0 (flag0)
+            126 CALL_FUNCTION            1
+            128 STORE_FAST               1 (flag1)
+
+ 34         130 LOAD_GLOBAL              8 (f2)
+            132 LOAD_FAST                1 (flag1)
+            134 CALL_FUNCTION            1
+            136 STORE_FAST               2 (flag2)
+
+ 35         138 LOAD_GLOBAL              9 (f3)
+            140 LOAD_FAST                2 (flag2)
+            142 CALL_FUNCTION            1
+            144 STORE_FAST               3 (flag3)
+
+ 36         146 LOAD_FAST                3 (flag3)
+            148 LOAD_CONST              12 ('cccbfd96f2faff37b9682c07afb83114d8a165c379c61a82ede034637563feee')
+            150 COMPARE_OP               2 (==)
+            152 POP_JUMP_IF_FALSE       83 (to 166)
+
+ 37         154 LOAD_GLOBAL              5 (print)
+            156 LOAD_CONST              13 ('[INFO] NICE! YOU GET THE FLAG!')
+            158 CALL_FUNCTION            1
+            160 POP_TOP
+
+ 40         162 LOAD_CONST               0 (None)
+            164 RETURN_VALUE
+
+ 39     >>  166 LOAD_GLOBAL              5 (print)
+            168 LOAD_CONST              14 ('[ERROR] try more some?')
+            170 CALL_FUNCTION            1
+            172 POP_TOP
+
+ 40         174 LOAD_CONST               0 (None)
+            176 RETURN_VALUE
+

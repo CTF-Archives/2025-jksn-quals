@@ -1,0 +1,78 @@
+var express = require('express');
+var router = express.Router();
+const FLAG = "flag:xxxxxxxxxxxxxxxxxx:";
+var MYPET= {
+    title:"电子宠物",
+    name:"猫猫",
+    health:100,
+    energy:80,
+    level:5,
+    exp:80,
+    color:"红色",
+    //debug:'on'
+};
+var lastTime = -1;
+
+function merge(target, source) {
+    for (let key in source) {
+        if (typeof source[key] === 'object' && source[key] !== null) {
+            if (!target[key]) target[key] = {}; 
+            merge(target[key], source[key]); 
+        } else {
+            target[key] = source[key]; 
+        }
+    }
+    return target;
+}
+
+
+router.get('/get_exp', function (req, res, next) {
+  if(MYPET.energy<=0){
+    return res.send({"error":1,"msg":"能量不足，无法提升经验"});
+  }
+  if(lastTime==-1 || (new Date().getTime() - lastTime > 10*3600000)){
+    MYPET.energy-=10;
+    if(MYPET.energy<=0){
+      MYPET.energy=0;
+    }
+    MYPET.exp+=10;
+    lastTime = new Date().getTime();
+    return res.send({"error":0})
+  }
+	return res.send({"error":1,"msg":"需要等待"+Math.round(10-(new Date().getTime() - lastTime)/60000)+"分钟后，才能继续提升经验"})
+});
+
+router.get('/get_treasure', function (req, res, next) {
+  //console.log("debug",MYPET.debug)
+  if(MYPET.level<10 && MYPET.debug!='on'){
+    return res.send({"error":1,"msg":"等级不够，无法获得宝藏，请快点升到10级吧！"})
+  }
+	res.send({"error":0,"data":{"treasure":FLAG}})
+});
+
+router.get('/update', function (req, res, next) {
+  //合并请求参数
+  //console.log(JSON.parse(req.query.data))
+  var params = merge({},JSON.parse(req.query.data));
+  if(req.body && ("data" in req.body)){
+      params = merge(params,JSON.parse(req.body.data));
+  }
+  if(params.name){
+    MYPET.name = params.name;
+    return res.send({"error":0})
+  }else{
+    return res.send({"error":1,"msg":"请输入新的名字"})
+  }
+	
+});
+
+router.get('/', function (req, res, next) {
+  if(MYPET.exp>100){
+    MYPET.level++;
+    MYPET.exp=0;
+  }
+	res.render("index",MYPET);
+});
+
+
+module.exports = router;
