@@ -308,7 +308,7 @@
 
 > 听说AI大模型很火，小艾同学于是也开始研究机器学习的知识，他从网上下载了一个模型文件，但是查看模型权重的时候，发现权重中的数字分布有点奇怪，好像隐藏着什么信息？flag格式为flag{xxxxxxxxxx}。
 
-[附件下载](attachments727/login.php)
+[附件下载](attachments727/model.pth)
 
 ## Misc
 
